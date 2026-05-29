@@ -1,477 +1,1857 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<title>Gift Card Ready</title>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fhive Fitness — Build Your Strongest Version | Nagpur</title>
+<meta name="description" content="Fhive Fitness Gym — Nagpur's premium fitness destination. Elite training, certified trainers, transformation programs. Join now.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,300;1,400&family=Barlow+Condensed:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#080a0c;
+  --dark:#0d1117;
+  --card:#111820;
+  --card2:#151d26;
+  --border:#1e2d3d;
+  --orange:#ff5c0a;
+  --blue:#00aaff;
+  --red:#e8192c;
+  --gold:#f5a623;
+  --white:#f0f4f8;
+  --muted:#8899aa;
+  --font-head:'Bebas Neue',sans-serif;
+  --font-cond:'Barlow Condensed',sans-serif;
+  --font-body:'Barlow',sans-serif;
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{background:var(--dark);color:var(--white);font-family:var(--font-body);overflow-x:hidden;cursor:default}
 
-  body{
-    background:#f4f7fb;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    color:#111827;
-    line-height:1.6;
-    padding:40px 15px;
-  }
+/* Scrollbar */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--black)}
+::-webkit-scrollbar-thumb{background:var(--orange);border-radius:2px}
 
-  .email-wrapper{
-    max-width:680px;
-    margin:auto;
-  }
+/* Selection */
+::selection{background:var(--orange);color:#fff}
 
-  .email-card{
-    background:#ffffff;
-    border-radius:28px;
-    overflow:hidden;
-    box-shadow:
-      0 10px 40px rgba(15,23,42,0.08),
-      0 2px 10px rgba(15,23,42,0.04);
-  }
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5%;height:72px;
+  background:rgba(8,10,12,0.85);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,92,10,0.12);
+  transition:background .3s;
+}
+.nav-logo{
+  font-family:var(--font-head);font-size:2rem;letter-spacing:.08em;
+  background:linear-gradient(135deg,var(--orange),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{
+  font-family:var(--font-cond);font-size:1rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;transition:color .2s;
+}
+.nav-links a:hover{color:var(--orange)}
+.nav-cta{
+  background:var(--orange);color:#fff;
+  font-family:var(--font-cond);font-size:.95rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:.55rem 1.6rem;border-radius:2px;text-decoration:none;
+  transition:background .2s,transform .15s;display:none;
+}
+.nav-cta:hover{background:#ff7733;transform:translateY(-1px)}
+@media(min-width:900px){.nav-cta{display:block}}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px}
+.hamburger span{width:24px;height:2px;background:var(--white);border-radius:1px;transition:.3s}
+@media(max-width:900px){.nav-links{display:none}.hamburger{display:flex}}
+.mobile-menu{
+  display:none;position:fixed;top:72px;left:0;right:0;
+  background:rgba(8,10,12,0.98);backdrop-filter:blur(20px);
+  padding:2rem 5%;z-index:999;border-bottom:1px solid var(--border);
+}
+.mobile-menu.open{display:block}
+.mobile-menu ul{list-style:none;display:flex;flex-direction:column;gap:1.5rem}
+.mobile-menu a{font-family:var(--font-cond);font-size:1.4rem;letter-spacing:.12em;text-transform:uppercase;color:var(--white);text-decoration:none}
+.mobile-menu a:hover{color:var(--orange)}
 
-  /* HERO */
+/* ─── HERO ─── */
+#hero{
+  position:relative;height:100vh;min-height:600px;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;z-index:0;
+  background:
+    linear-gradient(180deg,rgba(8,10,12,.3) 0%,rgba(8,10,12,.7) 60%,var(--dark) 100%),
+    radial-gradient(ellipse 80% 60% at 50% 40%,rgba(255,92,10,.12) 0%,transparent 70%);
+}
+.hero-grid{
+  position:absolute;inset:0;z-index:0;opacity:.06;
+  background-image:
+    linear-gradient(rgba(255,92,10,.8) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,92,10,.8) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 80%);
+}
+.hero-noise{
+  position:absolute;inset:0;z-index:0;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:200px 200px;
+}
+/* Large gym silhouette as CSS art */
+.hero-silhouette{
+  position:absolute;right:-2%;bottom:0;z-index:1;opacity:.08;
+  width:55%;height:90%;
+  background:linear-gradient(180deg,var(--white) 0%,rgba(240,244,248,0) 100%);
+  clip-path:polygon(60% 0%,80% 0%,100% 0%,100% 100%,0% 100%,10% 60%,20% 40%,30% 20%,40% 5%,50% 0%);
+}
+.hero-content{
+  position:relative;z-index:2;text-align:center;
+  padding:0 5%;max-width:1100px;margin:0 auto;
+  animation:heroIn .9s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes heroIn{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:var(--font-cond);font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--orange);border:1px solid rgba(255,92,10,.35);
+  padding:.4rem 1.2rem;border-radius:2px;margin-bottom:2rem;
+}
+.hero-tag::before{content:'';width:6px;height:6px;background:var(--orange);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.hero-h1{
+  font-family:var(--font-head);font-size:clamp(4rem,10vw,10rem);
+  line-height:.92;letter-spacing:.04em;
+  color:var(--white);margin-bottom:1rem;
+}
+.hero-h1 .accent{
+  background:linear-gradient(90deg,var(--orange),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{
+  font-family:var(--font-cond);font-size:clamp(1.1rem,2.5vw,1.5rem);
+  letter-spacing:.08em;color:var(--muted);margin-bottom:2.5rem;max-width:600px;margin-inline:auto;
+  text-transform:uppercase;
+}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:4rem}
+.btn-primary{
+  font-family:var(--font-cond);font-size:1.05rem;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--orange);color:#fff;padding:.9rem 2.4rem;
+  border-radius:2px;text-decoration:none;
+  box-shadow:0 0 30px rgba(255,92,10,.3);
+  transition:background .2s,box-shadow .2s,transform .15s;
+  border:none;cursor:pointer;
+}
+.btn-primary:hover{background:#ff7733;box-shadow:0 0 50px rgba(255,92,10,.5);transform:translateY(-2px)}
+.btn-outline{
+  font-family:var(--font-cond);font-size:1.05rem;letter-spacing:.12em;text-transform:uppercase;
+  background:transparent;color:var(--white);padding:.9rem 2.4rem;
+  border-radius:2px;text-decoration:none;
+  border:1px solid rgba(240,244,248,.25);
+  transition:border-color .2s,background .2s,transform .15s;cursor:pointer;
+}
+.btn-outline:hover{border-color:var(--orange);background:rgba(255,92,10,.08);transform:translateY(-2px)}
+.hero-stats{
+  display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;
+  border-top:1px solid rgba(255,255,255,.07);padding-top:2.5rem;
+}
+.stat-item{text-align:center}
+.stat-num{
+  font-family:var(--font-head);font-size:clamp(2rem,5vw,3.5rem);
+  background:linear-gradient(135deg,var(--white),var(--muted));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.stat-label{
+  font-family:var(--font-cond);font-size:.85rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--orange);margin-top:.25rem;
+}
+.scroll-indicator{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  z-index:2;display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  animation:float 2.5s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+.scroll-indicator span{
+  font-family:var(--font-cond);font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+}
+.scroll-line{width:1px;height:40px;background:linear-gradient(var(--orange),transparent)}
 
-  .hero{
-    position:relative;
-    padding:50px 40px;
-    background:
-      radial-gradient(circle at top left,#7c3aed 0%,transparent 35%),
-      radial-gradient(circle at bottom right,#2563eb 0%,transparent 35%),
-      linear-gradient(135deg,#0f172a 0%,#111827 100%);
-    color:#fff;
-    overflow:hidden;
-  }
+/* ─── SECTION COMMONS ─── */
+section{padding:6rem 5%}
+.section-tag{
+  font-family:var(--font-cond);font-size:.85rem;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:1rem;display:block;
+}
+.section-h2{
+  font-family:var(--font-head);font-size:clamp(2.8rem,6vw,5.5rem);
+  line-height:.95;letter-spacing:.04em;margin-bottom:1.5rem;
+}
+.section-h2 em{
+  font-style:normal;
+  background:linear-gradient(90deg,var(--orange),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.section-p{
+  font-size:1.05rem;line-height:1.75;color:var(--muted);max-width:55ch;
+}
+.max-w{max-width:1200px;margin-inline:auto}
 
-  .hero::before{
-    content:'';
-    position:absolute;
-    width:280px;
-    height:280px;
-    border-radius:50%;
-    background:rgba(255,255,255,0.05);
-    top:-120px;
-    right:-80px;
-  }
+/* ─── ABOUT ─── */
+#about{background:var(--black)}
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;
+  max-width:1200px;margin:0 auto;
+}
+@media(max-width:768px){.about-grid{grid-template-columns:1fr;gap:3rem}}
+.about-visual{
+  position:relative;aspect-ratio:4/5;border-radius:4px;overflow:hidden;
+}
+.about-visual-inner{
+  width:100%;height:100%;
+  background:linear-gradient(160deg,var(--card) 0%,var(--card2) 100%);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.gym-art{
+  width:100%;height:100%;position:relative;
+}
+.about-accent{
+  position:absolute;bottom:2rem;right:-1.5rem;
+  background:var(--orange);padding:1.5rem 2rem;border-radius:2px;
+  font-family:var(--font-head);font-size:2.5rem;color:#fff;
+  box-shadow:0 0 40px rgba(255,92,10,.4);
+}
+.about-accent span{display:block;font-family:var(--font-cond);font-size:.9rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.about-text .section-p{margin-bottom:2rem}
+.about-pills{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem}
+.pill{
+  font-family:var(--font-cond);font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:.45rem 1.1rem;border:1px solid var(--border);border-radius:2px;
+  color:var(--muted);transition:border-color .2s,color .2s;
+}
+.pill:hover{border-color:var(--orange);color:var(--orange)}
 
-  .logo{
-    font-size:14px;
-    letter-spacing:3px;
-    text-transform:uppercase;
-    color:rgba(255,255,255,0.75);
-    margin-bottom:24px;
-    font-weight:600;
-  }
+/* ─── WHY CHOOSE US ─── */
+#why{
+  background:linear-gradient(180deg,var(--dark) 0%,var(--black) 100%);
+  position:relative;overflow:hidden;
+}
+#why::before{
+  content:'ELITE';position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-family:var(--font-head);font-size:25vw;color:rgba(255,92,10,.03);
+  letter-spacing:.05em;white-space:nowrap;pointer-events:none;
+  user-select:none;
+}
+.features-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1.5px;margin-top:4rem;
+  border:1.5px solid var(--border);
+  background:var(--border);
+  border-radius:4px;overflow:hidden;
+}
+.feature-card{
+  background:var(--card);padding:2.5rem 2rem;
+  transition:background .25s,transform .25s;
+  cursor:default;position:relative;overflow:hidden;
+}
+.feature-card::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,92,10,.07) 0%,transparent 60%);
+  opacity:0;transition:opacity .3s;
+}
+.feature-card:hover{background:var(--card2);transform:translateY(-3px)}
+.feature-card:hover::after{opacity:1}
+.feature-icon{
+  width:52px;height:52px;border-radius:4px;
+  background:rgba(255,92,10,.1);border:1px solid rgba(255,92,10,.2);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.5rem;font-size:1.5rem;
+}
+.feature-h{
+  font-family:var(--font-cond);font-size:1.2rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--white);margin-bottom:.6rem;font-weight:700;
+}
+.feature-p{font-size:.92rem;color:var(--muted);line-height:1.65}
 
-  .hero h1{
-    font-size:34px;
-    line-height:1.2;
-    margin-bottom:14px;
-    font-weight:700;
-    letter-spacing:-1px;
-  }
+/* ─── PROGRAMS ─── */
+#programs{background:var(--black)}
+.programs-header{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  flex-wrap:wrap;gap:2rem;margin-bottom:3rem;max-width:1200px;margin-inline:auto;
+}
+.programs-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:1.5rem;max-width:1200px;margin-inline:auto;
+}
+.program-card{
+  position:relative;aspect-ratio:3/4;border-radius:4px;overflow:hidden;
+  cursor:pointer;
+  background:var(--card);
+}
+.program-card-bg{
+  position:absolute;inset:0;transition:transform .4s cubic-bezier(.16,1,.3,1);
+}
+.program-card:hover .program-card-bg{transform:scale(1.06)}
+.program-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 30%,rgba(8,10,12,.95) 100%);
+}
+.program-body{
+  position:absolute;bottom:0;left:0;right:0;padding:1.5rem 1.25rem;
+}
+.program-cat{
+  font-family:var(--font-cond);font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:.4rem;display:block;
+}
+.program-name{
+  font-family:var(--font-cond);font-size:1.3rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--white);font-weight:700;line-height:1.2;
+}
+.program-tag-badge{
+  position:absolute;top:1rem;right:1rem;
+  font-family:var(--font-cond);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--orange);color:#fff;padding:.3rem .7rem;border-radius:2px;
+}
 
-  .hero p{
-    color:rgba(255,255,255,0.75);
-    font-size:16px;
-    max-width:480px;
-  }
+/* gradient backgrounds for program cards */
+.prog-1{background:linear-gradient(135deg,#1a0a0a,#3d1a08)}
+.prog-2{background:linear-gradient(135deg,#08101a,#0a2040)}
+.prog-3{background:linear-gradient(135deg,#0f0a1a,#1a0830)}
+.prog-4{background:linear-gradient(135deg,#081a14,#0a3024)}
+.prog-5{background:linear-gradient(135deg,#1a0808,#3d1010)}
+.prog-6{background:linear-gradient(135deg,#0a0a12,#181828)}
+.prog-7{background:linear-gradient(135deg,#1a0f08,#3a2010)}
+.prog-8{background:linear-gradient(135deg,#08150a,#102818)}
+.prog-9{background:linear-gradient(135deg,#1a1008,#3d2808)}
 
-  /* GIFT CARD */
+/* ─── TRAINERS ─── */
+#trainers{
+  background:linear-gradient(180deg,var(--dark) 0%,var(--card) 100%);
+}
+.trainers-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:2rem;margin-top:3rem;max-width:1200px;margin-inline:auto;
+}
+.trainer-card{
+  background:var(--card);border:1px solid var(--border);border-radius:4px;
+  overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s;
+}
+.trainer-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(255,92,10,.3);
+  box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 0 1px rgba(255,92,10,.15);
+}
+.trainer-img{
+  height:300px;position:relative;overflow:hidden;
+}
+.trainer-img-inner{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:5rem;
+}
+.trainer-img-inner svg{opacity:.15}
+.trainer-avatar{
+  width:80px;height:80px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-head);font-size:2rem;color:#fff;
+  position:relative;z-index:2;
+}
+.trainer-body{padding:1.5rem}
+.trainer-name{
+  font-family:var(--font-cond);font-size:1.35rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--white);font-weight:700;margin-bottom:.25rem;
+}
+.trainer-spec{
+  font-family:var(--font-cond);font-size:.9rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:.75rem;
+}
+.trainer-exp{
+  font-size:.88rem;color:var(--muted);line-height:1.6;margin-bottom:1.25rem;
+}
+.trainer-socials{display:flex;gap:.75rem}
+.social-btn{
+  width:36px;height:36px;border-radius:2px;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);font-size:.85rem;text-decoration:none;
+  transition:border-color .2s,color .2s,background .2s;
+}
+.social-btn:hover{border-color:var(--orange);color:var(--orange);background:rgba(255,92,10,.08)}
+.trainer-specialty-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
+.spec-pill{
+  font-family:var(--font-cond);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;
+  background:rgba(255,92,10,.08);color:rgba(255,92,10,.8);
+  padding:.25rem .65rem;border-radius:2px;border:1px solid rgba(255,92,10,.2);
+}
 
-  .gift-card{
-    margin-top:35px;
-    backdrop-filter:blur(20px);
-    background:rgba(255,255,255,0.12);
-    border:1px solid rgba(255,255,255,0.15);
-    border-radius:24px;
-    padding:35px;
-  }
+/* ─── MEMBERSHIP ─── */
+#membership{background:var(--black);position:relative;overflow:hidden}
+#membership::after{
+  content:'';position:absolute;top:-200px;right:-200px;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,92,10,.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+.toggle-wrap{
+  display:flex;justify-content:center;gap:0;margin:2.5rem 0;
+}
+.toggle-btn{
+  font-family:var(--font-cond);font-size:.95rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:.65rem 2rem;border:1px solid var(--border);background:transparent;
+  color:var(--muted);cursor:pointer;transition:all .2s;
+}
+.toggle-btn:first-child{border-radius:2px 0 0 2px}
+.toggle-btn:last-child{border-radius:0 2px 2px 0;border-left:none}
+.toggle-btn.active{background:var(--orange);color:#fff;border-color:var(--orange)}
+.plans-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;max-width:1000px;margin-inline:auto;
+}
+.plan-card{
+  background:var(--card);border:1px solid var(--border);border-radius:4px;
+  padding:2.5rem 2rem;position:relative;overflow:hidden;
+  transition:transform .3s,border-color .3s;
+}
+.plan-card:hover{transform:translateY(-4px)}
+.plan-card.popular{border-color:var(--orange);border-width:1.5px}
+.plan-card.popular::before{
+  content:'MOST POPULAR';position:absolute;top:0;left:0;right:0;
+  background:var(--orange);text-align:center;
+  font-family:var(--font-cond);font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;
+  color:#fff;padding:.45rem 0;
+}
+.plan-card.popular .plan-name{margin-top:1.5rem}
+.plan-name{
+  font-family:var(--font-cond);font-size:.9rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:1rem;
+}
+.plan-price{
+  font-family:var(--font-head);font-size:3.5rem;letter-spacing:.04em;color:var(--white);
+  line-height:1;margin-bottom:.25rem;
+}
+.plan-price sup{font-family:var(--font-cond);font-size:1.2rem;vertical-align:super}
+.plan-period{
+  font-family:var(--font-cond);font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:2rem;
+}
+.plan-features{list-style:none;margin-bottom:2rem;display:flex;flex-direction:column;gap:.75rem}
+.plan-features li{
+  display:flex;align-items:center;gap:.75rem;
+  font-size:.92rem;color:var(--muted);
+}
+.plan-features li::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--orange);flex-shrink:0;
+}
+.plan-features li.muted::before{background:var(--border)}
+.plan-features li.muted{color:rgba(136,153,170,.4)}
+.plan-cta{
+  display:block;width:100%;text-align:center;
+  font-family:var(--font-cond);font-size:1rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:.85rem;border-radius:2px;text-decoration:none;
+  border:1px solid var(--border);color:var(--white);
+  transition:all .2s;cursor:pointer;background:transparent;
+}
+.plan-card.popular .plan-cta{background:var(--orange);border-color:var(--orange);color:#fff}
+.plan-cta:hover{background:var(--orange);border-color:var(--orange);color:#fff}
+.plan-card.popular .plan-cta:hover{background:#ff7733}
 
-  .brand{
-    font-size:18px;
-    color:rgba(255,255,255,0.8);
-    margin-bottom:18px;
-  }
+/* ─── TESTIMONIALS ─── */
+#testimonials{
+  background:linear-gradient(180deg,var(--dark) 0%,var(--black) 100%);
+  position:relative;
+}
+.testimonials-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:1.5rem;margin-top:3rem;max-width:1200px;margin-inline:auto;
+}
+.testimonial-card{
+  background:var(--card);border:1px solid var(--border);border-radius:4px;
+  padding:2rem;position:relative;transition:border-color .3s,transform .3s;
+}
+.testimonial-card:hover{border-color:rgba(255,92,10,.25);transform:translateY(-4px)}
+.testimonial-card::before{
+  content:'"';font-family:var(--font-head);font-size:5rem;line-height:1;
+  color:rgba(255,92,10,.12);position:absolute;top:1rem;right:1.5rem;
+}
+.stars{color:var(--gold);margin-bottom:1rem;letter-spacing:.1em}
+.testimonial-text{
+  font-size:.95rem;line-height:1.7;color:var(--muted);margin-bottom:1.5rem;
+  font-style:italic;
+}
+.testimonial-author{display:flex;align-items:center;gap:1rem}
+.author-avatar{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,var(--orange),var(--gold));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-head);font-size:1.1rem;color:#fff;flex-shrink:0;
+}
+.author-name{
+  font-family:var(--font-cond);font-size:1rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--white);font-weight:600;
+}
+.author-tag{
+  font-size:.82rem;color:var(--orange);margin-top:.15rem;
+}
+.transformation-banner{
+  max-width:1200px;margin:4rem auto 0;
+  background:linear-gradient(135deg,var(--card),var(--card2));
+  border:1px solid var(--border);border-radius:4px;padding:3rem;
+  display:flex;justify-content:space-around;align-items:center;flex-wrap:wrap;gap:2rem;
+}
+.transform-stat{text-align:center}
+.transform-num{
+  font-family:var(--font-head);font-size:clamp(2.5rem,6vw,4.5rem);
+  background:linear-gradient(90deg,var(--orange),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.transform-label{
+  font-family:var(--font-cond);font-size:.85rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);margin-top:.25rem;
+}
 
-  .amount{
-    font-size:58px;
-    font-weight:800;
-    letter-spacing:-2px;
-    margin-bottom:28px;
-  }
+/* ─── FACILITIES ─── */
+#facilities{background:var(--black)}
+.facilities-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:1.5rem;margin-top:3rem;max-width:1200px;margin-inline:auto;
+}
+.facility-card{
+  background:var(--card);border:1px solid var(--border);border-radius:4px;
+  padding:2rem 1.5rem;text-align:center;
+  transition:border-color .3s,transform .3s,background .3s;
+}
+.facility-card:hover{border-color:rgba(255,92,10,.3);transform:translateY(-4px);background:var(--card2)}
+.facility-icon-wrap{
+  width:60px;height:60px;border-radius:4px;
+  background:rgba(255,92,10,.08);border:1px solid rgba(255,92,10,.15);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1.25rem;font-size:1.6rem;
+}
+.facility-name{
+  font-family:var(--font-cond);font-size:1.05rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--white);font-weight:700;margin-bottom:.5rem;
+}
+.facility-desc{font-size:.85rem;color:var(--muted);line-height:1.6}
 
-  .voucher-box{
-    background:rgba(255,255,255,0.12);
-    border:1px solid rgba(255,255,255,0.15);
-    border-radius:18px;
-    padding:20px;
-  }
+/* ─── INSTAGRAM ─── */
+#instagram{background:var(--dark);overflow:hidden}
+.insta-header{max-width:1200px;margin-inline:auto;margin-bottom:2rem}
+.insta-handle{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-family:var(--font-cond);font-size:1.1rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--orange);text-decoration:none;
+}
+.insta-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:4px;max-width:1200px;margin-inline:auto;
+}
+.insta-cell{
+  aspect-ratio:1;background:var(--card);border-radius:2px;overflow:hidden;
+  position:relative;cursor:pointer;
+}
+.insta-cell::after{
+  content:'';position:absolute;inset:0;
+  background:rgba(255,92,10,.0);transition:background .25s;
+}
+.insta-cell:hover::after{background:rgba(255,92,10,.2)}
+.insta-inner{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.5rem;opacity:.15;
+}
+/* Simulated Instagram grid with color themes */
+.insta-1{background:linear-gradient(135deg,#1a0d08,#3d2010)}
+.insta-2{background:linear-gradient(135deg,#081020,#0a1830)}
+.insta-3{background:linear-gradient(135deg,#100808,#2d1010)}
+.insta-4{background:linear-gradient(135deg,#0a1510,#0d2818)}
+.insta-5{background:linear-gradient(135deg,#1a1008,#3d2a10)}
+.insta-6{background:linear-gradient(135deg,#08100a,#102018)}
+.insta-7{background:linear-gradient(135deg,#1a0a10,#380820)}
+.insta-8{background:linear-gradient(135deg,#101218,#181c30)}
+.insta-9{background:linear-gradient(135deg,#1a1208,#3d2c10)}
+/* Gym figure CSS art inside insta cells */
+.figure{
+  width:40%;height:70%;position:relative;
+}
 
-  .voucher-label{
-    font-size:12px;
-    text-transform:uppercase;
-    letter-spacing:2px;
-    color:rgba(255,255,255,0.65);
-    margin-bottom:10px;
-  }
+/* ─── CONTACT ─── */
+#contact{
+  background:linear-gradient(180deg,var(--dark) 0%,var(--black) 100%);
+}
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;
+  max-width:1200px;margin-inline:auto;
+  align-items:start;
+}
+@media(max-width:768px){.contact-grid{grid-template-columns:1fr;gap:3rem}}
+.contact-info .section-p{margin-bottom:2rem}
+.contact-details{display:flex;flex-direction:column;gap:1.25rem;margin-bottom:2.5rem}
+.contact-item{display:flex;align-items:flex-start;gap:1rem}
+.contact-icon{
+  width:42px;height:42px;border-radius:2px;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--orange);font-size:1.1rem;flex-shrink:0;
+}
+.contact-text-label{
+  font-family:var(--font-cond);font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.2rem;
+}
+.contact-text-val{font-size:.95rem;color:var(--white)}
+.timings-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:.75rem;
+  background:var(--card);border:1px solid var(--border);border-radius:4px;padding:1.5rem;
+}
+.timing-item{font-size:.88rem}
+.timing-day{
+  font-family:var(--font-cond);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.2rem;
+}
+.timing-hours{color:var(--orange)}
+.contact-form{
+  background:var(--card);border:1px solid var(--border);border-radius:4px;padding:2.5rem;
+}
+.form-h{
+  font-family:var(--font-cond);font-size:1.4rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--white);font-weight:700;margin-bottom:1.75rem;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:480px){.form-row{grid-template-columns:1fr}}
+.form-group{margin-bottom:1rem}
+.form-group label{
+  display:block;font-family:var(--font-cond);font-size:.82rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.5rem;
+}
+.form-input{
+  width:100%;background:var(--black);border:1px solid var(--border);border-radius:2px;
+  padding:.75rem 1rem;color:var(--white);font-family:var(--font-body);font-size:.95rem;
+  outline:none;transition:border-color .2s;
+}
+.form-input:focus{border-color:var(--orange)}
+.form-input::placeholder{color:rgba(136,153,170,.4)}
+textarea.form-input{resize:vertical;min-height:100px}
+.form-submit{
+  width:100%;background:var(--orange);color:#fff;
+  font-family:var(--font-cond);font-size:1rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:.9rem;border:none;border-radius:2px;cursor:pointer;
+  transition:background .2s,transform .15s;
+  box-shadow:0 0 20px rgba(255,92,10,.2);
+}
+.form-submit:hover{background:#ff7733;transform:translateY(-2px)}
+.map-embed{
+  margin-top:2rem;border-radius:4px;overflow:hidden;border:1px solid var(--border);height:260px;
+  background:var(--card);display:flex;align-items:center;justify-content:center;
+}
+.map-placeholder{text-align:center;color:var(--muted)}
+.map-placeholder .map-icon{font-size:2.5rem;margin-bottom:.75rem}
+.map-placeholder p{font-family:var(--font-cond);font-size:.9rem;letter-spacing:.1em;text-transform:uppercase}
+.map-link{
+  display:inline-block;margin-top:.75rem;
+  font-family:var(--font-cond);font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--orange);text-decoration:none;border-bottom:1px solid rgba(255,92,10,.3);
+  transition:border-color .2s;
+}
+.map-link:hover{border-color:var(--orange)}
 
-  .voucher-code{
-    font-size:24px;
-    font-weight:700;
-    letter-spacing:3px;
-    word-break:break-word;
-    font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
-  }
+/* ─── FOOTER ─── */
+footer{
+  background:var(--black);border-top:1px solid var(--border);
+  padding:4rem 5% 2rem;
+}
+.footer-top{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;
+  max-width:1200px;margin-inline:auto;margin-bottom:3rem;
+}
+@media(max-width:900px){.footer-top{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.footer-top{grid-template-columns:1fr}}
+.footer-brand .nav-logo{font-size:2.5rem;display:block;margin-bottom:1rem}
+.footer-desc{font-size:.9rem;color:var(--muted);line-height:1.7;max-width:30ch}
+.footer-socials{display:flex;gap:.75rem;margin-top:1.5rem}
+.footer-col-h{
+  font-family:var(--font-cond);font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--white);margin-bottom:1.25rem;font-weight:700;
+}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.footer-links a{
+  font-size:.9rem;color:var(--muted);text-decoration:none;
+  transition:color .2s;
+}
+.footer-links a:hover{color:var(--orange)}
+.footer-bottom{
+  max-width:1200px;margin-inline:auto;
+  padding-top:2rem;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+}
+.footer-copy{font-size:.85rem;color:var(--muted)}
+.footer-copy span{color:var(--orange)}
 
-  .copy-text{
-    margin-top:12px;
-    font-size:13px;
-    color:rgba(255,255,255,0.65);
-  }
+/* ─── FLOATING CTAs ─── */
+.floating-ctas{
+  position:fixed;bottom:2rem;right:2rem;z-index:999;
+  display:flex;flex-direction:column;gap:.75rem;align-items:flex-end;
+}
+.float-btn{
+  display:flex;align-items:center;gap:.65rem;
+  font-family:var(--font-cond);font-size:.9rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:.65rem 1.4rem;border-radius:30px;text-decoration:none;
+  font-weight:600;transition:transform .2s,box-shadow .2s;
+  box-shadow:0 4px 20px rgba(0,0,0,.5);
+}
+.float-join{background:var(--orange);color:#fff}
+.float-wa{background:#25D366;color:#fff}
+.float-call{background:var(--blue);color:#fff}
+.float-btn:hover{transform:scale(1.05);box-shadow:0 8px 30px rgba(0,0,0,.6)}
+.float-icon{font-size:1.1rem}
 
-  /* CONTENT */
+/* ─── DIVIDERS ─── */
+.divider{
+  height:1px;background:linear-gradient(90deg,transparent,var(--orange),transparent);
+  opacity:.25;
+}
+.orange-line{
+  width:60px;height:3px;background:var(--orange);margin:.75rem 0 1.5rem;
+  border-radius:2px;
+}
 
-  .content{
-    padding:45px 40px;
-  }
+/* ─── SCROLL ANIMATIONS ─── */
+.reveal{
+  opacity:0;transform:translateY(30px);
+  transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);
+}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+.reveal-delay-4{transition-delay:.4s}
 
-  .intro{
-    font-size:17px;
-    color:#374151;
-    margin-bottom:30px;
-  }
+/* ─── RESPONSIVE ─── */
+@media(max-width:600px){
+  section{padding:4rem 5%}
+  .hero-stats{gap:1.5rem}
+  .stat-num{font-size:2rem}
+  .section-h2{font-size:2.8rem}
+}
 
-  .section{
-    margin-bottom:34px;
-  }
-
-  .section-title{
-    font-size:18px;
-    font-weight:700;
-    margin-bottom:18px;
-    color:#111827;
-  }
-
-  .info-grid{
-    display:grid;
-    gap:14px;
-  }
-
-  .info-card{
-    background:#f8fafc;
-    border:1px solid #e5e7eb;
-    border-radius:18px;
-    padding:18px 20px;
-  }
-
-  .info-label{
-    font-size:12px;
-    text-transform:uppercase;
-    letter-spacing:1.5px;
-    color:#6b7280;
-    margin-bottom:8px;
-    font-weight:600;
-  }
-
-  .info-value{
-    font-size:16px;
-    font-weight:600;
-    color:#111827;
-  }
-
-  /* STEPS */
-
-  .steps{
-    background:linear-gradient(180deg,#f8fafc 0%,#ffffff 100%);
-    border:1px solid #e5e7eb;
-    border-radius:22px;
-    padding:28px;
-  }
-
-  .steps ol{
-    padding-left:18px;
-    margin-top:18px;
-  }
-
-  .steps li{
-    margin-bottom:14px;
-    color:#374151;
-  }
-
-  /* BUTTONS */
-
-  .btn{
-    display:inline-block;
-    padding:14px 28px;
-    border-radius:14px;
-    text-decoration:none;
-    font-weight:600;
-    margin-top:22px;
-    transition:all .25s ease;
-  }
-
-  .btn-primary{
-    background:linear-gradient(135deg,#7c3aed,#2563eb);
-    color:#fff !important;
-    box-shadow:0 10px 20px rgba(99,102,241,0.25);
-  }
-
-  .btn-secondary{
-    background:#111827;
-    color:#fff !important;
-  }
-
-  /* ALERT */
-
-  .alert{
-    background:#fff7ed;
-    border:1px solid #fed7aa;
-    border-radius:18px;
-    padding:24px;
-  }
-
-  .alert ul{
-    padding-left:20px;
-    margin-top:15px;
-  }
-
-  .alert li{
-    margin-bottom:10px;
-    color:#7c2d12;
-  }
-
-  /* FOOTER */
-
-  .footer{
-    padding:30px 40px 40px;
-    border-top:1px solid #e5e7eb;
-    text-align:center;
-    color:#6b7280;
-    font-size:13px;
-  }
-
-  .footer a{
-    color:#4f46e5;
-    text-decoration:none;
-    font-weight:600;
-  }
-
-  .security-note{
-    margin-top:35px;
-    padding:20px;
-    border-radius:18px;
-    background:#111827;
-    color:rgba(255,255,255,0.8);
-    font-size:14px;
-  }
-
-  @media(max-width:640px){
-
-    .hero,
-    .content,
-    .footer{
-      padding:30px 24px;
-    }
-
-    .gift-card{
-      padding:24px;
-    }
-
-    .hero h1{
-      font-size:28px;
-    }
-
-    .amount{
-      font-size:42px;
-    }
-
-    .voucher-code{
-      font-size:18px;
-      letter-spacing:2px;
-    }
-  }
+/* ─── PROGRAM VISUAL PATTERNS ─── */
+.prog-dumbbell,.prog-run,.prog-box,.prog-women,.prog-cardio,.prog-cross,.prog-muscle,.prog-hiit,.prog-transform{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-size:5rem;opacity:.1;
+}
 </style>
 </head>
-
 <body>
 
-<div class="email-wrapper">
-
-  <div class="email-card">
-
-    <!-- HERO -->
-    <div class="hero">
-
-      <div class="logo">RSKPAY DIGITAL REWARDS</div>
-
-      <h1>Your Gift Card Is Ready ✨</h1>
-
-      <p>
-        Enjoy seamless shopping with your premium digital gift card.
-        Redeem instantly online or in-app.
-      </p>
-
-      <div class="gift-card">
-
-        <div class="brand">{{brandName}}</div>
-
-        <div class="amount">₹{{amount}}</div>
-
-        <div class="voucher-box">
-
-          <div class="voucher-label">Voucher Code</div>
-
-          <div class="voucher-code">
-            {{voucherCode}}
-          </div>
-
-          <div class="copy-text">
-            Tap & copy during redemption
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- CONTENT -->
-    <div class="content">
-
-      <p class="intro">
-        Hi <strong>{{firstName}}</strong>,
-        <br /><br />
-        Your <strong>{{brandName}}</strong> gift card has been successfully issued and is now ready to use.
-      </p>
-
-      <!-- DETAILS -->
-      <div class="section">
-
-        <div class="section-title">
-          Gift Card Details
-        </div>
-
-        <div class="info-grid">
-
-          <div class="info-card">
-            <div class="info-label">Voucher Code</div>
-            <div class="info-value">{{voucherCode}}</div>
-          </div>
-
-          <div class="info-card">
-            <div class="info-label">Available Balance</div>
-            <div class="info-value">₹{{amount}}</div>
-          </div>
-
-          <div class="info-card">
-            <div class="info-label">Expiry Date</div>
-            <div class="info-value">{{expiryDate}}</div>
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- HOW TO REDEEM -->
-      <div class="section">
-
-        <div class="steps">
-
-          <div class="section-title">
-            How To Redeem
-          </div>
-
-          <ol>
-            <li>Visit the official {{brandName}} website or mobile app.</li>
-            <li>Add your favorite items to the cart.</li>
-            <li>Proceed to checkout.</li>
-            <li>Select <strong>Gift Card</strong> as payment method.</li>
-            <li>Enter your voucher code and complete payment.</li>
-          </ol>
-
-          <a href="{{redemptionUrl}}" class="btn btn-primary">
-            Redeem Now
-          </a>
-
-        </div>
-
-      </div>
-
-      <!-- IMPORTANT -->
-      <div class="section">
-
-        <div class="alert">
-
-          <div class="section-title">
-            Important Information
-          </div>
-
-          <ul>
-            <li>This voucher expires on <strong>{{expiryDate}}</strong>.</li>
-            <li>Unused balance remains available until expiry.</li>
-            <li>Gift cards are non-refundable after successful purchase.</li>
-            <li>Usage is subject to {{brandName}} terms & conditions.</li>
-          </ul>
-
-        </div>
-
-      </div>
-
-      <!-- SUPPORT -->
-      <div class="section">
-
-        <div class="section-title">
-          Need Help?
-        </div>
-
-        <p style="color:#4b5563;">
-          If you face any redemption issues or have questions,
-          our support team is here to help.
-        </p>
-
-        <a href="{{supportUrl}}" class="btn btn-secondary">
-          Contact Support
-        </a>
-
-      </div>
-
-      <div class="security-note">
-        <strong>Security Reminder:</strong>
-        Keep this voucher code confidential. Anyone with access to the code may redeem the balance.
-      </div>
-
-    </div>
-
-    <!-- FOOTER -->
-    <div class="footer">
-
-      <p>
-        © 2026 <strong>RSKPay</strong>. All rights reserved.
-      </p>
-
-      <p style="margin-top:14px;">
-        This is an automated email. Please do not reply directly.
-      </p>
-
-      <p style="margin-top:16px;">
-        <a href="https://support.rskpay.in/unsubscribe">
-          Unsubscribe
-        </a>
-      </p>
-
-    </div>
-
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">FHIVE</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#trainers">Trainers</a></li>
+    <li><a href="#membership">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#membership" class="nav-cta">Join Now</a>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
   </div>
+</nav>
 
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#about" onclick="toggleMenu()">About</a></li>
+    <li><a href="#programs" onclick="toggleMenu()">Programs</a></li>
+    <li><a href="#trainers" onclick="toggleMenu()">Trainers</a></li>
+    <li><a href="#membership" onclick="toggleMenu()">Membership</a></li>
+    <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
+    <li><a href="#membership" style="color:var(--orange)" onclick="toggleMenu()">Join Now →</a></li>
+  </ul>
 </div>
 
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-noise"></div>
+  <!-- Animated gym shapes -->
+  <div style="position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none">
+    <svg width="100%" height="100%" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice" style="opacity:.06">
+      <!-- Barbell silhouette -->
+      <rect x="200" y="420" width="1000" height="20" rx="10" fill="rgba(255,92,10,0.8)"/>
+      <rect x="180" y="360" width="100" height="140" rx="8" fill="rgba(255,92,10,0.6)"/>
+      <rect x="280" y="380" width="60" height="100" rx="6" fill="rgba(255,92,10,0.5)"/>
+      <rect x="1060" y="360" width="100" height="140" rx="8" fill="rgba(255,92,10,0.6)"/>
+      <rect x="1000" y="380" width="60" height="100" rx="6" fill="rgba(255,92,10,0.5)"/>
+      <!-- Human silhouette lifting -->
+      <ellipse cx="700" cy="300" rx="45" ry="55" fill="rgba(240,244,248,0.5)"/>
+      <rect x="655" y="350" width="90" height="160" rx="12" fill="rgba(240,244,248,0.5)"/>
+      <rect x="600" y="355" width="55" height="15" rx="7" fill="rgba(240,244,248,0.4)"/>
+      <rect x="745" y="355" width="55" height="15" rx="7" fill="rgba(240,244,248,0.4)"/>
+      <rect x="655" y="510" width="40" height="130" rx="8" fill="rgba(240,244,248,0.5)"/>
+      <rect x="705" y="510" width="40" height="130" rx="8" fill="rgba(240,244,248,0.5)"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-tag">
+      <span>Nagpur's Elite Training Hub</span>
+    </div>
+    <h1 class="hero-h1">
+      BUILD YOUR<br>
+      <span class="accent">STRONGEST</span><br>
+      VERSION
+    </h1>
+    <p class="hero-sub">Discipline · Strength · Transformation · Community</p>
+    <div class="hero-btns">
+      <a href="#membership" class="btn-primary">Join Now</a>
+      <a href="#contact" class="btn-outline">Book Free Trial</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num" data-target="500">0+</div>
+        <div class="stat-label">Active Members</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" data-target="8">0</div>
+        <div class="stat-label">Expert Trainers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" data-target="300">0+</div>
+        <div class="stat-label">Transformations</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" data-target="50">0+</div>
+        <div class="stat-label">Premium Machines</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-visual reveal">
+      <div class="about-visual-inner">
+        <!-- Abstract gym visual as SVG art -->
+        <svg viewBox="0 0 440 560" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <!-- Background ambiance -->
+          <defs>
+            <radialGradient id="glow1" cx="50%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="#ff5c0a" stop-opacity="0.15"/>
+              <stop offset="100%" stop-color="#080a0c" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect width="440" height="560" fill="#0d1117"/>
+          <rect width="440" height="560" fill="url(#glow1)"/>
+          <!-- Grid lines -->
+          <g opacity="0.06" stroke="#ff5c0a" stroke-width="0.5">
+            <line x1="0" y1="80" x2="440" y2="80"/>
+            <line x1="0" y1="160" x2="440" y2="160"/>
+            <line x1="0" y1="240" x2="440" y2="240"/>
+            <line x1="0" y1="320" x2="440" y2="320"/>
+            <line x1="0" y1="400" x2="440" y2="400"/>
+            <line x1="0" y1="480" x2="440" y2="480"/>
+            <line x1="80" y1="0" x2="80" y2="560"/>
+            <line x1="160" y1="0" x2="160" y2="560"/>
+            <line x1="240" y1="0" x2="240" y2="560"/>
+            <line x1="360" y1="0" x2="360" y2="560"/>
+          </g>
+          <!-- Dumbbell large -->
+          <g opacity="0.7">
+            <rect x="160" y="255" width="120" height="14" rx="7" fill="#ff5c0a"/>
+            <rect x="140" y="235" width="44" height="54" rx="6" fill="#cc4a08"/>
+            <rect x="256" y="235" width="44" height="54" rx="6" fill="#cc4a08"/>
+            <rect x="152" y="243" width="20" height="38" rx="4" fill="#e8540a"/>
+            <rect x="268" y="243" width="20" height="38" rx="4" fill="#e8540a"/>
+          </g>
+          <!-- Athlete silhouette -->
+          <g opacity="0.5" fill="#f0f4f8">
+            <!-- Head -->
+            <ellipse cx="220" cy="130" rx="30" ry="36" fill="#e8edf2"/>
+            <!-- Neck -->
+            <rect x="210" y="163" width="20" height="20" rx="4" fill="#dde3ea"/>
+            <!-- Torso - wide shoulders -->
+            <path d="M145 183 L175 180 L185 175 L220 178 L255 175 L265 180 L295 183 L290 290 L150 290 Z" fill="#dde3ea"/>
+            <!-- Left arm up -->
+            <path d="M145 183 L105 155 L100 140 L120 135 L155 165 L155 183 Z" fill="#e8edf2"/>
+            <!-- Right arm up -->
+            <path d="M295 183 L335 155 L340 140 L320 135 L285 165 L285 183 Z" fill="#e8edf2"/>
+            <!-- Forearms -->
+            <rect x="92" y="115" width="28" height="48" rx="14" fill="#e8edf2" transform="rotate(-20,106,139)"/>
+            <rect x="320" y="115" width="28" height="48" rx="14" fill="#e8edf2" transform="rotate(20,334,139)"/>
+            <!-- Legs -->
+            <rect x="155" y="288" width="55" height="130" rx="16" fill="#dde3ea"/>
+            <rect x="228" y="288" width="55" height="130" rx="16" fill="#dde3ea"/>
+            <!-- Shoes -->
+            <rect x="145" y="408" width="70" height="25" rx="10" fill="#cc4a08"/>
+            <rect x="222" y="408" width="70" height="25" rx="10" fill="#cc4a08"/>
+          </g>
+          <!-- Orange lines accent -->
+          <line x1="0" y1="460" x2="440" y2="460" stroke="#ff5c0a" stroke-width="2" opacity="0.3"/>
+          <!-- Text -->
+          <text x="220" y="510" text-anchor="middle" fill="#ff5c0a" font-family="'Bebas Neue',sans-serif" font-size="32" letter-spacing="8" opacity="0.6">FHIVE</text>
+          <text x="220" y="535" text-anchor="middle" fill="rgba(136,153,170,0.5)" font-family="'Barlow Condensed',sans-serif" font-size="12" letter-spacing="6">FITNESS · NAGPUR</text>
+        </svg>
+      </div>
+      <div class="about-accent">
+        2019<span>Est. Year</span>
+      </div>
+    </div>
+
+    <div class="about-text">
+      <span class="section-tag reveal">Our Story</span>
+      <h2 class="section-h2 reveal reveal-delay-1">WHERE <em>LEGENDS</em><br>ARE BUILT</h2>
+      <div class="orange-line reveal reveal-delay-2"></div>
+      <p class="section-p reveal reveal-delay-2">
+        Founded in Nagpur in April 2019, Fhive Fitness was born from one relentless conviction — that every person deserves access to elite-grade training. What started as a bold vision has grown into Nagpur's most respected transformation hub.
+      </p>
+      <p class="section-p reveal reveal-delay-3">
+        At Fhive, we don't just build bodies — we build discipline, resilience, and confidence. Our premium facility, elite trainers, and science-backed programs create an environment where ordinary people achieve extraordinary results.
+      </p>
+      <div class="about-pills reveal reveal-delay-4">
+        <span class="pill">Premium Equipment</span>
+        <span class="pill">Elite Trainers</span>
+        <span class="pill">5+ Years Strong</span>
+        <span class="pill">Science-Based</span>
+        <span class="pill">Community First</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHY CHOOSE US -->
+<section id="why">
+  <div class="max-w">
+    <div style="text-align:center;margin-bottom:3rem">
+      <span class="section-tag reveal">Why Fhive</span>
+      <h2 class="section-h2 reveal reveal-delay-1" style="text-align:center">THE <em>FHIVE</em><br>ADVANTAGE</h2>
+    </div>
+    <div class="features-grid reveal reveal-delay-2">
+      <div class="feature-card">
+        <div class="feature-icon">🏆</div>
+        <div class="feature-h">Certified Trainers</div>
+        <p class="feature-p">Our coaches are nationally certified with years of real-world experience transforming bodies and mindsets.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-h">Premium Equipment</div>
+        <p class="feature-p">Imported commercial-grade machines and free weights designed for maximum performance and safety.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <div class="feature-h">Personal Training</div>
+        <p class="feature-p">One-on-one sessions tailored to your goals, fitness level, and schedule for accelerated results.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔥</div>
+        <div class="feature-h">Fat Loss Programs</div>
+        <p class="feature-p">Science-backed protocols combining resistance training, HIIT, and nutrition to torch fat efficiently.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💪</div>
+        <div class="feature-h">Strength Training</div>
+        <p class="feature-p">Progressive overload programming designed to build raw power, muscle mass, and functional strength.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤸</div>
+        <div class="feature-h">Functional Fitness</div>
+        <p class="feature-p">Movement-based training that improves everyday performance, mobility, and injury prevention.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🥗</div>
+        <div class="feature-h">Nutrition Guidance</div>
+        <p class="feature-p">Expert dietary advice and meal planning support to complement your training and maximize gains.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤝</div>
+        <div class="feature-h">Community Support</div>
+        <p class="feature-p">A tribe of motivated individuals who push, support, and celebrate each other's victories every day.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROGRAMS -->
+<section id="programs">
+  <div class="programs-header">
+    <div>
+      <span class="section-tag reveal">Programs</span>
+      <h2 class="section-h2 reveal reveal-delay-1">TRAIN WITH <em>PURPOSE</em></h2>
+    </div>
+    <p class="section-p reveal reveal-delay-2" style="max-width:32ch">Every program is engineered to deliver results, not excuses.</p>
+  </div>
+  <div class="programs-grid">
+    <div class="program-card reveal">
+      <div class="program-card-bg prog-1"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.12">
+        <svg viewBox="0 0 100 100" width="80" height="80" fill="none">
+          <rect x="20" y="45" width="60" height="10" rx="5" fill="white"/>
+          <rect x="10" y="30" width="24" height="40" rx="5" fill="white"/>
+          <rect x="66" y="30" width="24" height="40" rx="5" fill="white"/>
+        </svg>
+      </div>
+      <div class="program-overlay"></div>
+      <div class="program-body">
+        <span class="program-cat">Strength</span>
+        <div class="program-name">Weight Training</div>
+      </div>
+    </div>
+    <div class="program-card reveal reveal-delay-1">
+      <div class="program-card-bg prog-2"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.12">
+        <svg viewBox="0 0 100 100" width="80" height="80" fill="none">
+          <path d="M20 70 L40 40 L55 55 L70 30 L80 40" stroke="white" stroke-width="5" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+      <div class="program-overlay"></div>
+      <div class="program-body">
+        <span class="program-cat">Cardio</span>
+        <div class="program-name">Fat Loss</div>
+      </div>
+      <div class="program-tag-badge">Popular</div>
+    </div>
+    <div class="program-card reveal reveal-delay-2">
+      <div class="program-card-bg prog-3"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.12">
+        <svg viewBox="0 0 100 100" width="80" height="80">
+          <ellipse cx="50" cy="35" rx="20" ry="22" fill="white"/>
+          <rect x="30" y="55" width="40" height="35" rx="10" fill="white"/>
+          <rect x="20" y="58" width="28" height="10" rx="5" fill="white"/>
+          <rect x="52" y="58" width="28" height="10" rx="5" fill="white"/>
+        </svg>
+      </div>
+      <div class="program-overlay"></div>
+      <div class="program-body">
+        <span class="program-cat">Hypertrophy</span>
+        <div class="program-name">Muscle Building</div>
+      </div>
+    </div>
+    <div class="program-card reveal">
+      <div class="program-card-bg prog-4"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.12">
+        <svg viewBox="0 0 100 100" width="80" height="80" fill="none">
+          <path d="M25 75 L35 45 L50 60 L65 30 L75 50 L85 35" stroke="white" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="50" cy="25" r="10" fill="white"/>
+        </svg>
+      </div>
+      <div class="program-overlay"></div>
+      <div class="program-body">
+        <span class="program-cat">High Intensity</span>
+        <div class="program-name">CrossFit</div>
+      </div>
+    </div>
+    <div class="program-card reveal reveal-delay-1">
+      <div class="program-card-bg prog-5"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.12">
+        <svg viewBox="0 0 100 100" width="80" height="80" fill="none">
+          <path d="M20 80 Q30 30 50 50 Q70 70 80 20" stroke="white" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="50" cy="50" r="8" fill="white"/>
+        </svg>
+      </div>
+      <div class="program-overlay"></div>
+      <div class="program-body">
+        <span class="program-cat">Conditioning</span>
+        <div class="program-name">HIIT</div>
+      </div>
+      <div class="program-tag-badge">Intense</div>
+    </div>
+    <div class="program-card reveal reveal-delay-2">
+      <div class="program-card-bg prog-6"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.12">
+        <svg viewBox="0 0 100 100" width="80" height="80">
+          <ellipse cx="50" cy="30" rx="16" ry="20" fill="white"/>
+          <path d="M34 50 Q30 40 22 38 L28 65 L38 65 L40 75 L60 75 L62 65 L72 65 L78 38 Q70 40 66 50 Q58 40 50 45 Q42 40 34 50Z" fill="white"/>
+        </svg>
+      </div>
+      <div class="program-overlay"></div>
+      <div class="program-body">
+        <span class="program-cat">Elite</span>
+        <div class="program-name">Personal Training</div>
+      </div>
+    </div>
+    <div class="program-card reveal">
+      <div class="program-card-bg prog-7"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.12">
+        <svg viewBox="0 0 100 100" width="80" height="80">
+          <ellipse cx="50" cy="28" rx="14" ry="17" fill="white"/>
+          <path d="M36 45 Q30 38 22 40 L26 62 L35 62 L37 72 L63 72 L65 62 L74 62 L78 40 Q70 38 64 45 Q57 37 50 42 Q43 37 36 45Z" fill="white"/>
+          <path d="M22 40 L14 55 L22 58 L26 48" fill="white"/>
+          <path d="M78 40 L86 55 L78 58 L74 48" fill="white"/>
+        </svg>
+      </div>
+      <div class="program-overlay"></div>
+      <div class="program-body">
+        <span class="program-cat">Inclusive</span>
+        <div class="program-name">Women's Fitness</div>
+      </div>
+    </div>
+    <div class="program-card reveal reveal-delay-1">
+      <div class="program-card-bg prog-8"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.12">
+        <svg viewBox="0 0 100 100" width="80" height="80" fill="none">
+          <circle cx="50" cy="50" r="30" stroke="white" stroke-width="5"/>
+          <path d="M50 20 L50 50 L70 50" stroke="white" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="program-overlay"></div>
+      <div class="program-body">
+        <span class="program-cat">Endurance</span>
+        <div class="program-name">Cardio Zone</div>
+      </div>
+    </div>
+    <div class="program-card reveal reveal-delay-2">
+      <div class="program-card-bg prog-9"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.12">
+        <svg viewBox="0 0 100 100" width="80" height="80" fill="none">
+          <path d="M20 80 L30 50 L45 65 L50 35 L55 65 L70 50 L80 80" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="program-overlay"></div>
+      <div class="program-body">
+        <span class="program-cat">Complete</span>
+        <div class="program-name">Transformation</div>
+      </div>
+      <div class="program-tag-badge">🔥 New</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TRAINERS -->
+<section id="trainers">
+  <div class="max-w">
+    <div style="text-align:center;margin-bottom:1rem">
+      <span class="section-tag reveal">Our Coaches</span>
+      <h2 class="section-h2 reveal reveal-delay-1">MEET YOUR <em>SQUAD</em></h2>
+    </div>
+    <p class="section-p reveal reveal-delay-2" style="text-align:center;margin-inline:auto;margin-bottom:0">Certified professionals obsessed with your transformation.</p>
+  </div>
+  <div class="trainers-grid">
+    <div class="trainer-card reveal">
+      <div class="trainer-img">
+        <div class="trainer-img-inner" style="background:linear-gradient(135deg,#1a0d08,#4d2010)">
+          <div class="trainer-avatar" style="background:linear-gradient(135deg,var(--orange),#ff8c42);font-size:2.5rem">RS</div>
+        </div>
+      </div>
+      <div class="trainer-body">
+        <div class="trainer-name">Rahul Sharma</div>
+        <div class="trainer-spec">Head Coach · Strength & Conditioning</div>
+        <p class="trainer-exp">8+ years transforming physiques. National-level powerlifting athlete with expertise in progressive overload and periodization.</p>
+        <div class="trainer-specialty-pills">
+          <span class="spec-pill">Powerlifting</span>
+          <span class="spec-pill">Muscle Building</span>
+          <span class="spec-pill">Nutrition</span>
+        </div>
+        <div class="trainer-socials" style="margin-top:1rem">
+          <a href="https://www.instagram.com/fhivefitness/" class="social-btn" target="_blank" title="Instagram">📸</a>
+          <a href="tel:+919876543210" class="social-btn" title="Call">📱</a>
+        </div>
+      </div>
+    </div>
+    <div class="trainer-card reveal reveal-delay-1">
+      <div class="trainer-img">
+        <div class="trainer-img-inner" style="background:linear-gradient(135deg,#081020,#0a2540)">
+          <div class="trainer-avatar" style="background:linear-gradient(135deg,var(--blue),#0055aa);font-size:2.5rem">PK</div>
+        </div>
+      </div>
+      <div class="trainer-body">
+        <div class="trainer-name">Priya Kulkarni</div>
+        <div class="trainer-spec">Women's Fitness · Fat Loss Specialist</div>
+        <p class="trainer-exp">6+ years specializing in female transformation. Certified in prenatal fitness and hormonal health training.</p>
+        <div class="trainer-specialty-pills">
+          <span class="spec-pill">Fat Loss</span>
+          <span class="spec-pill">HIIT</span>
+          <span class="spec-pill">Flexibility</span>
+        </div>
+        <div class="trainer-socials" style="margin-top:1rem">
+          <a href="https://www.instagram.com/fhivefitness/" class="social-btn" target="_blank" title="Instagram">📸</a>
+          <a href="tel:+919876543210" class="social-btn" title="Call">📱</a>
+        </div>
+      </div>
+    </div>
+    <div class="trainer-card reveal reveal-delay-2">
+      <div class="trainer-img">
+        <div class="trainer-img-inner" style="background:linear-gradient(135deg,#101820,#1a3040)">
+          <div class="trainer-avatar" style="background:linear-gradient(135deg,#2a2a4a,#4a4a8a);font-size:2.5rem">AM</div>
+        </div>
+      </div>
+      <div class="trainer-body">
+        <div class="trainer-name">Arjun Meshram</div>
+        <div class="trainer-spec">CrossFit Coach · Functional Fitness</div>
+        <p class="trainer-exp">5 years CrossFit L2 certified coach. Former state-level athlete with passion for building athletic performance.</p>
+        <div class="trainer-specialty-pills">
+          <span class="spec-pill">CrossFit</span>
+          <span class="spec-pill">Athletic Performance</span>
+        </div>
+        <div class="trainer-socials" style="margin-top:1rem">
+          <a href="https://www.instagram.com/fhivefitness/" class="social-btn" target="_blank" title="Instagram">📸</a>
+          <a href="tel:+919876543210" class="social-btn" title="Call">📱</a>
+        </div>
+      </div>
+    </div>
+    <div class="trainer-card reveal reveal-delay-3">
+      <div class="trainer-img">
+        <div class="trainer-img-inner" style="background:linear-gradient(135deg,#0f100a,#252818)">
+          <div class="trainer-avatar" style="background:linear-gradient(135deg,#2a4a10,#4a8a20);font-size:2.5rem">NK</div>
+        </div>
+      </div>
+      <div class="trainer-body">
+        <div class="trainer-name">Neha Kale</div>
+        <div class="trainer-spec">Nutrition Coach · Cardio Specialist</div>
+        <p class="trainer-exp">Certified sports nutritionist and cardio specialist helping members optimize body composition through diet and endurance training.</p>
+        <div class="trainer-specialty-pills">
+          <span class="spec-pill">Nutrition</span>
+          <span class="spec-pill">Cardio</span>
+          <span class="spec-pill">Weight Loss</span>
+        </div>
+        <div class="trainer-socials" style="margin-top:1rem">
+          <a href="https://www.instagram.com/fhivefitness/" class="social-btn" target="_blank" title="Instagram">📸</a>
+          <a href="tel:+919876543210" class="social-btn" title="Call">📱</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MEMBERSHIP -->
+<section id="membership">
+  <div class="max-w">
+    <div style="text-align:center">
+      <span class="section-tag reveal">Invest In Yourself</span>
+      <h2 class="section-h2 reveal reveal-delay-1" style="text-align:center">MEMBERSHIP <em>PLANS</em></h2>
+    </div>
+    <div class="toggle-wrap reveal reveal-delay-2">
+      <button class="toggle-btn active" onclick="togglePlan('monthly',this)">Monthly</button>
+      <button class="toggle-btn" onclick="togglePlan('quarterly',this)">Quarterly</button>
+      <button class="toggle-btn" onclick="togglePlan('yearly',this)">Yearly</button>
+    </div>
+    <div class="plans-grid" id="plansGrid">
+      <!-- Plans rendered by JS -->
+    </div>
+    <p class="reveal" style="text-align:center;margin-top:1.5rem;font-family:var(--font-cond);font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)">
+      All plans include gym access · Locker · Drinking water · WiFi
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="max-w">
+    <div style="text-align:center;margin-bottom:1rem">
+      <span class="section-tag reveal">Real Results</span>
+      <h2 class="section-h2 reveal reveal-delay-1">MEMBERS WHO <em>TRANSFORMED</em></h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Fhive completely changed my life. In 6 months I lost 18kg and gained the confidence I never had. The trainers here genuinely care about your results."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">VD</div>
+          <div>
+            <div class="author-name">Vikram Deshmukh</div>
+            <div class="author-tag">Lost 18kg in 6 months</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-1">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Best gym in Nagpur, hands down. The equipment is top-notch, the ambience is electric, and the coaching is world-class. Worth every rupee."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:linear-gradient(135deg,var(--blue),#0055aa)">SA</div>
+          <div>
+            <div class="author-name">Sneha Agarwal</div>
+            <div class="author-tag">2 Year Member</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"The transformation program is incredible. I went from 68kg to 82kg lean mass in one year. Rahul bhai's programming is on another level entirely."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:linear-gradient(135deg,#2a4a10,#4a8a20)">RP</div>
+          <div>
+            <div class="author-name">Rohan Pawar</div>
+            <div class="author-tag">Gained 14kg Lean Mass</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"As a working professional with limited time, the personalized approach at Fhive is a game-changer. 3 sessions a week and I'm in the best shape of my 30s."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:linear-gradient(135deg,#3a1a3a,#6a3a6a)">NK</div>
+          <div>
+            <div class="author-name">Neha Kothari</div>
+            <div class="author-tag">Working Professional</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-1">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Joined for the HIIT classes and stayed for the community. There's something special about the energy at Fhive — it pushes you beyond what you thought possible."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:linear-gradient(135deg,#1a2a3a,#2a4a6a)">AJ</div>
+          <div>
+            <div class="author-name">Akash Joshi</div>
+            <div class="author-tag">HIIT Enthusiast</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"The nutrition guidance changed everything. I was training hard but eating wrong. Fhive's coaches helped me understand the science behind real transformation."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:linear-gradient(135deg,#3a2a0a,#6a5a1a)">PM</div>
+          <div>
+            <div class="author-name">Priya Munshi</div>
+            <div class="author-tag">Transformation Champion</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="transformation-banner reveal">
+      <div class="transform-stat">
+        <div class="transform-num">500+</div>
+        <div class="transform-label">Active Members</div>
+      </div>
+      <div class="transform-stat">
+        <div class="transform-num">300+</div>
+        <div class="transform-label">Transformations</div>
+      </div>
+      <div class="transform-stat">
+        <div class="transform-num">4.9★</div>
+        <div class="transform-label">Avg. Rating</div>
+      </div>
+      <div class="transform-stat">
+        <div class="transform-num">5+</div>
+        <div class="transform-label">Years of Excellence</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FACILITIES -->
+<section id="facilities">
+  <div class="max-w">
+    <div style="text-align:center;margin-bottom:3rem">
+      <span class="section-tag reveal">World-Class Amenities</span>
+      <h2 class="section-h2 reveal reveal-delay-1">OUR <em>FACILITIES</em></h2>
+    </div>
+    <div class="facilities-grid">
+      <div class="facility-card reveal">
+        <div class="facility-icon-wrap">💪</div>
+        <div class="facility-name">Free Weights Zone</div>
+        <p class="facility-desc">Full range of dumbbells, barbells, and benches for unrestricted strength training</p>
+      </div>
+      <div class="facility-card reveal reveal-delay-1">
+        <div class="facility-icon-wrap">🏋️</div>
+        <div class="facility-name">Machine Zone</div>
+        <p class="facility-desc">Premium imported commercial-grade strength machines for targeted muscle isolation</p>
+      </div>
+      <div class="facility-card reveal reveal-delay-2">
+        <div class="facility-icon-wrap">🏃</div>
+        <div class="facility-name">Cardio Area</div>
+        <p class="facility-desc">Treadmills, ellipticals, bikes, and rowing machines for every cardio need</p>
+      </div>
+      <div class="facility-card reveal">
+        <div class="facility-icon-wrap">⚡</div>
+        <div class="facility-name">Functional Zone</div>
+        <p class="facility-desc">Turf area with ropes, kettlebells, sleds, and functional training equipment</p>
+      </div>
+      <div class="facility-card reveal reveal-delay-1">
+        <div class="facility-icon-wrap">🛁</div>
+        <div class="facility-name">Locker Rooms</div>
+        <p class="facility-desc">Clean, well-maintained changing rooms with secure lockers and fresh amenities</p>
+      </div>
+      <div class="facility-card reveal reveal-delay-2">
+        <div class="facility-icon-wrap">🧘</div>
+        <div class="facility-name">Recovery Area</div>
+        <p class="facility-desc">Dedicated stretching and recovery zone for post-workout mobility work</p>
+      </div>
+      <div class="facility-card reveal">
+        <div class="facility-icon-wrap">🥤</div>
+        <div class="facility-name">Supplements Bar</div>
+        <p class="facility-desc">Quality protein shakes, pre-workouts, and nutrition products available on-site</p>
+      </div>
+      <div class="facility-card reveal reveal-delay-1">
+        <div class="facility-icon-wrap">📱</div>
+        <div class="facility-name">Free WiFi</div>
+        <p class="facility-desc">High-speed internet so you can stream workouts and stay connected while training</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- INSTAGRAM -->
+<section id="instagram" style="padding:4rem 5%">
+  <div class="insta-header">
+    <span class="section-tag reveal">Follow the Journey</span>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
+      <h2 class="section-h2 reveal reveal-delay-1" style="margin-bottom:0">@<em>FHIVEFITNESS</em></h2>
+      <a href="https://www.instagram.com/fhivefitness/" target="_blank" class="insta-handle reveal reveal-delay-2">
+        <span>📸</span> Follow on Instagram →
+      </a>
+    </div>
+  </div>
+  <div class="insta-grid reveal">
+    <!-- 9 grid cells with gym workout visual themes -->
+    <div class="insta-cell insta-1">
+      <div class="insta-inner">
+        <svg viewBox="0 0 60 60" fill="none" width="50" height="50">
+          <rect x="10" y="27" width="40" height="7" rx="3" fill="rgba(255,92,10,0.8)"/>
+          <rect x="5" y="17" width="16" height="26" rx="4" fill="rgba(255,92,10,0.6)"/>
+          <rect x="39" y="17" width="16" height="26" rx="4" fill="rgba(255,92,10,0.6)"/>
+        </svg>
+      </div>
+    </div>
+    <div class="insta-cell insta-2">
+      <div class="insta-inner">
+        <svg viewBox="0 0 60 60" fill="white" width="50" height="50">
+          <ellipse cx="30" cy="20" rx="10" ry="12"/>
+          <rect x="20" y="32" width="20" height="20" rx="6"/>
+          <rect x="10" y="34" width="10" height="6" rx="3"/>
+          <rect x="40" y="34" width="10" height="6" rx="3"/>
+        </svg>
+      </div>
+    </div>
+    <div class="insta-cell insta-3">
+      <div class="insta-inner">
+        <svg viewBox="0 0 60 60" fill="none" width="50" height="50">
+          <path d="M10 50 Q20 20 30 30 Q40 40 50 10" stroke="rgba(255,92,10,0.8)" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="insta-cell insta-4">
+      <div class="insta-inner">
+        <svg viewBox="0 0 60 60" fill="white" width="50" height="50">
+          <circle cx="30" cy="18" r="9"/>
+          <path d="M16 30 Q14 24 10 24 L13 42 L22 42 L23 50 L37 50 L38 42 L47 42 L50 24 Q46 24 44 30 Q37 23 30 27 Q23 23 16 30Z"/>
+        </svg>
+      </div>
+    </div>
+    <div class="insta-cell insta-5">
+      <div class="insta-inner">
+        <svg viewBox="0 0 60 60" fill="none" width="50" height="50">
+          <rect x="10" y="27" width="40" height="6" rx="3" fill="rgba(255,92,10,0.8)"/>
+          <circle cx="30" cy="10" r="8" fill="rgba(255,255,255,0.5)"/>
+          <rect x="22" y="33" width="7" height="20" rx="3" fill="rgba(255,255,255,0.5)"/>
+          <rect x="31" y="33" width="7" height="20" rx="3" fill="rgba(255,255,255,0.5)"/>
+        </svg>
+      </div>
+    </div>
+    <div class="insta-cell insta-6">
+      <div class="insta-inner">
+        <svg viewBox="0 0 60 60" fill="none" width="50" height="50">
+          <path d="M10 45 L20 25 L30 35 L40 15 L50 30" stroke="rgba(255,255,255,0.8)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="insta-cell insta-7">
+      <div class="insta-inner">
+        <svg viewBox="0 0 60 60" fill="white" width="50" height="50">
+          <circle cx="30" cy="18" r="10"/>
+          <path d="M18 30 Q15 23 8 24 L11 46 L21 46 L22 54 L38 54 L39 46 L49 46 L52 24 Q45 23 42 30 Q36 22 30 26 Q24 22 18 30Z"/>
+        </svg>
+      </div>
+    </div>
+    <div class="insta-cell insta-8">
+      <div class="insta-inner">
+        <svg viewBox="0 0 60 60" fill="none" width="50" height="50">
+          <circle cx="30" cy="30" r="18" stroke="rgba(255,92,10,0.8)" stroke-width="4"/>
+          <path d="M30 12 L30 30 L42 30" stroke="white" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="insta-cell insta-9">
+      <div class="insta-inner">
+        <svg viewBox="0 0 60 60" fill="none" width="50" height="50">
+          <path d="M10 50 L20 30 L30 40 L35 20 L40 35 L50 15" stroke="rgba(255,92,10,0.8)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <span class="section-tag reveal">Get In Touch</span>
+      <h2 class="section-h2 reveal reveal-delay-1">START YOUR <em>JOURNEY</em></h2>
+      <div class="orange-line reveal reveal-delay-2"></div>
+      <p class="section-p reveal reveal-delay-2">
+        Book your free trial session today. Walk in, feel the energy, and discover why hundreds of Nagpur residents call Fhive home.
+      </p>
+      <div class="contact-details reveal reveal-delay-3">
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-text-label">Location</div>
+            <div class="contact-text-val">Nagpur, Maharashtra — 440022</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <a href="tel:+917972345678" style="display:contents;text-decoration:none">
+            <div class="contact-icon">📞</div>
+            <div>
+              <div class="contact-text-label">Phone / WhatsApp</div>
+              <div class="contact-text-val" style="color:var(--orange)">+91 79723 45678</div>
+            </div>
+          </a>
+        </div>
+        <div class="contact-item">
+          <a href="https://www.instagram.com/fhivefitness/" target="_blank" style="display:contents;text-decoration:none">
+            <div class="contact-icon">📸</div>
+            <div>
+              <div class="contact-text-label">Instagram</div>
+              <div class="contact-text-val" style="color:var(--orange)">@fhivefitness</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="timings-grid reveal reveal-delay-4">
+        <div class="timing-item">
+          <div class="timing-day">Mon – Fri</div>
+          <div class="timing-hours">5:30 AM – 10:30 PM</div>
+        </div>
+        <div class="timing-item">
+          <div class="timing-day">Saturday</div>
+          <div class="timing-hours">6:00 AM – 9:00 PM</div>
+        </div>
+        <div class="timing-item">
+          <div class="timing-day">Sunday</div>
+          <div class="timing-hours">7:00 AM – 12:00 PM</div>
+        </div>
+        <div class="timing-item">
+          <div class="timing-day">Public Holidays</div>
+          <div class="timing-hours">8:00 AM – 12:00 PM</div>
+        </div>
+      </div>
+      <div class="map-embed reveal" style="margin-top:1.5rem">
+        <div class="map-placeholder">
+          <div class="map-icon">🗺️</div>
+          <p>Fhive Fitness Gym, Nagpur</p>
+          <a href="https://maps.google.com/?q=Nagpur+Maharashtra+440022" target="_blank" class="map-link">View on Google Maps →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal reveal-delay-2">
+      <div class="form-h">Book Your Free Trial</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" class="form-input" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" class="form-input" placeholder="Last name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" class="form-input" placeholder="+91 98765 43210">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" class="form-input" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label>Goal</label>
+        <select class="form-input">
+          <option value="" style="background:#111820">Select your primary goal</option>
+          <option style="background:#111820">Fat Loss / Weight Loss</option>
+          <option style="background:#111820">Muscle Building</option>
+          <option style="background:#111820">Strength Training</option>
+          <option style="background:#111820">CrossFit / HIIT</option>
+          <option style="background:#111820">Personal Training</option>
+          <option style="background:#111820">General Fitness</option>
+          <option style="background:#111820">Women's Fitness</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea class="form-input" placeholder="Any questions or specific requirements?"></textarea>
+      </div>
+      <button class="form-submit" onclick="handleSubmit(this)">Book Free Trial →</button>
+      <p style="margin-top:1rem;font-size:.8rem;color:var(--muted);text-align:center">No commitment required · Free trial · Instant confirmation</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="nav-logo">FHIVE</span>
+      <p class="footer-desc">Nagpur's premium fitness destination. Where discipline meets desire and legends are forged.</p>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/fhivefitness/" target="_blank" class="social-btn" style="font-size:1.1rem">📸</a>
+        <a href="https://wa.me/917972345678" target="_blank" class="social-btn" style="font-size:1.1rem">💬</a>
+        <a href="tel:+917972345678" class="social-btn" style="font-size:1.1rem">📞</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-h">Programs</div>
+      <ul class="footer-links">
+        <li><a href="#programs">Weight Training</a></li>
+        <li><a href="#programs">Fat Loss</a></li>
+        <li><a href="#programs">Muscle Building</a></li>
+        <li><a href="#programs">CrossFit</a></li>
+        <li><a href="#programs">HIIT</a></li>
+        <li><a href="#programs">Women's Fitness</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-h">Quick Links</div>
+      <ul class="footer-links">
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#trainers">Our Trainers</a></li>
+        <li><a href="#membership">Membership</a></li>
+        <li><a href="#facilities">Facilities</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-h">Contact</div>
+      <ul class="footer-links">
+        <li><a href="#">Nagpur, Maharashtra</a></li>
+        <li><a href="#">440022</a></li>
+        <li><a href="tel:+917972345678">+91 79723 45678</a></li>
+        <li><a href="https://www.instagram.com/fhivefitness/" target="_blank">@fhivefitness</a></li>
+        <li style="margin-top:.5rem;color:var(--muted);font-size:.85rem">Mon–Fri: 5:30AM–10:30PM</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 <span>Fhive Fitness</span> · Nagpur, Maharashtra · All Rights Reserved</p>
+    <p class="footer-copy">Built with passion · <span>Est. 2019</span></p>
+  </div>
+</footer>
+
+<!-- FLOATING CTAs -->
+<div class="floating-ctas">
+  <a href="#membership" class="float-btn float-join">
+    <span class="float-icon">💪</span> Join Now
+  </a>
+  <a href="https://wa.me/917972345678?text=Hi%20Fhive%20Fitness%2C%20I%27d%20like%20to%20book%20a%20free%20trial!" target="_blank" class="float-btn float-wa">
+    <span class="float-icon">💬</span> WhatsApp
+  </a>
+  <a href="tel:+917972345678" class="float-btn float-call">
+    <span class="float-icon">📞</span> Call
+  </a>
+</div>
+
+<script>
+// ─── MEMBERSHIP PLANS DATA ───
+const plans = {
+  monthly: [
+    {
+      name: "Starter",
+      price: 799,
+      period: "/month",
+      features: ["Full Gym Access","Locker Room","Free WiFi","Cardio Machines","Group Classes"],
+      missing: ["Personal Training","Diet Plan","Body Assessment"],
+      popular: false
+    },
+    {
+      name: "Pro",
+      price: 1299,
+      period: "/month",
+      features: ["Everything in Starter","4 PT Sessions/Month","Body Assessment","Diet Consultation","Priority Timings"],
+      missing: ["Unlimited PT","Custom Programming"],
+      popular: true
+    },
+    {
+      name: "Elite",
+      price: 2499,
+      period: "/month",
+      features: ["Everything in Pro","Unlimited PT Sessions","Custom Programming","Monthly Body Report","Nutrition Plan","Supplement Guidance"],
+      missing: [],
+      popular: false
+    }
+  ],
+  quarterly: [
+    {
+      name: "Starter",
+      price: 2099,
+      period: "/3 months",
+      features: ["Full Gym Access","Locker Room","Free WiFi","Cardio Machines","Group Classes"],
+      missing: ["Personal Training","Diet Plan","Body Assessment"],
+      popular: false
+    },
+    {
+      name: "Pro",
+      price: 3499,
+      period: "/3 months",
+      features: ["Everything in Starter","4 PT Sessions/Month","Body Assessment","Diet Consultation","Priority Timings"],
+      missing: ["Unlimited PT","Custom Programming"],
+      popular: true
+    },
+    {
+      name: "Elite",
+      price: 6999,
+      period: "/3 months",
+      features: ["Everything in Pro","Unlimited PT Sessions","Custom Programming","Monthly Body Report","Nutrition Plan","Supplement Guidance"],
+      missing: [],
+      popular: false
+    }
+  ],
+  yearly: [
+    {
+      name: "Starter",
+      price: 6999,
+      period: "/year",
+      features: ["Full Gym Access","Locker Room","Free WiFi","Cardio Machines","Group Classes"],
+      missing: ["Personal Training","Diet Plan","Body Assessment"],
+      popular: false
+    },
+    {
+      name: "Pro",
+      price: 11999,
+      period: "/year",
+      features: ["Everything in Starter","4 PT Sessions/Month","Body Assessment","Diet Consultation","Priority Timings"],
+      missing: ["Unlimited PT","Custom Programming"],
+      popular: true
+    },
+    {
+      name: "Elite",
+      price: 22999,
+      period: "/year",
+      features: ["Everything in Pro","Unlimited PT Sessions","Custom Programming","Monthly Body Report","Nutrition Plan","Supplement Guidance"],
+      missing: [],
+      popular: false
+    }
+  ]
+};
+
+function renderPlans(type) {
+  const grid = document.getElementById('plansGrid');
+  grid.innerHTML = plans[type].map(p => `
+    <div class="plan-card ${p.popular ? 'popular' : ''}">
+      <div class="plan-name">${p.name}</div>
+      <div class="plan-price"><sup>₹</sup>${p.price.toLocaleString('en-IN')}</div>
+      <div class="plan-period">${p.period} · No joining fee</div>
+      <ul class="plan-features">
+        ${p.features.map(f => `<li>${f}</li>`).join('')}
+        ${p.missing.map(f => `<li class="muted">${f}</li>`).join('')}
+      </ul>
+      <a href="#contact" class="plan-cta">Get Started →</a>
+    </div>
+  `).join('');
+}
+
+function togglePlan(type, btn) {
+  document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPlans(type);
+}
+
+renderPlans('monthly');
+
+// ─── MOBILE MENU ───
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// ─── SCROLL REVEAL ───
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ─── FORM SUBMIT ───
+function handleSubmit(btn) {
+  btn.textContent = '✓ Request Sent! We\'ll call you shortly.';
+  btn.style.background = '#1d8a3a';
+  btn.disabled = true;
+}
+
+// ─── STAT COUNTER ANIMATION ───
+function animateCounter(el, target, suffix) {
+  let current = 0;
+  const step = Math.ceil(target / 60);
+  const timer = setInterval(() => {
+    current = Math.min(current + step, target);
+    el.textContent = current + suffix;
+    if (current >= target) clearInterval(timer);
+  }, 25);
+}
+
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const nums = e.target.querySelectorAll('[data-target]');
+      nums.forEach(el => {
+        const target = parseInt(el.dataset.target);
+        const suffix = el.textContent.includes('+') ? '+' : '';
+        animateCounter(el, target, suffix);
+      });
+      statsObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+const heroStats = document.querySelector('.hero-stats');
+if (heroStats) statsObserver.observe(heroStats);
+
+// ─── STICKY NAV SCROLL ───
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  if (window.scrollY > 80) {
+    nav.style.background = 'rgba(8,10,12,0.97)';
+  } else {
+    nav.style.background = 'rgba(8,10,12,0.85)';
+  }
+}, { passive: true });
+
+// ─── CLOSE MOBILE MENU ON OUTSIDE CLICK ───
+document.addEventListener('click', (e) => {
+  const menu = document.getElementById('mobileMenu');
+  const hamburger = document.querySelector('.hamburger');
+  if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+    menu.classList.remove('open');
+  }
+});
+</script>
 </body>
 </html>
-```
